@@ -56,8 +56,100 @@ Max target sequences: 100; Short queries: Automatically adjust parameters for sh
 
 - For the PlantGenie API the top five hits seem to be different "versions" of the query sequence (have different numbers after the dot in the ID). For the EBI blast, the top hit seems to be the query sequence, and the following hits are of the corresponding gene in other closely related species. This tells me that BLAST scores a perfect match by sequence similarity, which is influenced by percentage identity, coverage and the e-value. 
 
-## Comparing the three results:
+### Comparing the three results:
 **Approach 	Speed 	                        Scalability 	            Reproducibility 	            Control**
 Website 	Fast for 1 sequence 	        Not scalable 	            Low (no record of parameters) 	Limited
 API 	    Moderate                        ~10s of sequences 	        Good (parameters in code) 	    Moderate
 Local HPC 	Slow to set up, fast to run 	Highly scalable 	        Excellent (script + Slurm log) 	Full
+
+
+## Interoperability assessment
+
+[PASS, PARTIAL, FAIL were assesed looking at the metadata on ENA alone. In the written answer, the article was also taken into considertion in some cases]
+
+**Finding the dataset**
+- [PASS] Can you locate the dataset by searching the GEO or ENA database without knowing the accession in advance? 
+        I was able to find the dataset in the ENA browser without knowing the accesion before, with the help of the paper title. The title as a whole did not work, but the key words "Populus tremula wood formation" gave me multiple hits, including the correct database.
+
+- [PASS] Is there a persistent, stable identifier (accession number) for the dataset? 
+        Yes
+
+- [PASS] Is the identifier cited in the paper?
+        The identifier is cited twice in the methods section, once under the RNA extraction paragraph and in a separate Accession number paragraph at the end of the methods section.
+
+
+**Sample identification** 
+- [PASS] Can you tell how many samples are in the dataset? 
+        There are 137 samples in the dataset.
+
+- [PASS] Can you assign each sample to an experimental condition (control vs treated, genotype A vs B, etc.) from the metadata alone? 
+        It is possible to get a minimum amount of information about the sample conditions, specifically which tissue the sample was taken from, both from the 'Library Name' and the 'Sample title' in the metadata. 
+
+- [PARTIAL] Are biological replicates identifiable?
+        I think that biological replicates are identifiable: it should be the samples that have the same tissue type in their 'Lilbrary Name' / 'Sample title', but different Experiment Accessions. This give sme the impression that they come from different experiments, aka from different individuals. 
+
+
+**Biological metadata**
+- [PASS] Is the organism identified with a taxonomy ID (not just a name)? 
+        The organism is identified with a tax ID.
+
+- [PARTIAL] Is the tissue or cell type specified? Is it annotated with an ontology term (e.g. UBERON, EFO, CL)? 
+        The tissue/cell type is specified in 'Sample title' and 'Library name'. No ontology term though.
+
+- [PARTIAL] Is the treatment or experimental condition specified? Is it annotated with an ontology term (e.g. EFO, CHEBI)? 
+        The experimental conditions do not seem to be mentioned in ontological terms. 
+
+- [FAIL] Are any other relevant variables specified (age, sex, genotype, growth conditions, time point)?
+        Other than the tissue type, there are no other relevant informations about experimental conditions are specified in the metadata on ENA. In the article, one can find that all of the individual were clones and naturally growing.
+
+
+**Technical metadata**
+- [PASS] Is the sequencing platform specified? 
+        The sequencing platform specified is: Illumina HiSeq 2000
+
+- [FAIL] Is the library preparation protocol specified (stranded/unstranded, poly-A/ribo-depleted)? 
+        The library preparation protocol is not specified in the metadata on ENA. In the article, details on how the library was produced are included. 
+
+- [PARTIAL] Is read length and paired/single end specified?
+        It is specified that the reads are paired, but read length is not specified.
+
+
+**Data availability**
+- [PASS] Are raw FASTQ files available (not only processed count matrices)? 
+        FastQ files are available.
+
+- [FAIL] Are processed results available (count matrix, normalised data)? 
+        Processed results are not available.
+
+- [FAIL] Is the reference genome/transcriptome version specified? 
+        The reference genome/transcriptome is not specified in the metadata in ENA, but in the article. 
+
+- [FAIL] Is the alignment tool and version specified?
+        The alignment tool and version are not specified in the metadata in ENA, but in the article..
+
+
+**Reproducibility**
+- [FAIL] Is analysis code available? 
+        The  methods are described in the methods section, but the code itself is not. 
+
+- [PASS] Are software versions specified for all tools used? 
+        Yes
+
+- [FAIL] Is there a workflow definition (Snakemake, Nextflow) or equivalent? 
+        No
+
+- [FAIL] Does the paper declare adherence to a community metadata standard (e.g. MINSEQE)?
+        No
+
+
+#### Checklist summary
+| Category              | Pass | Partial | Fail |
+|-----------------------|------|---------|------|
+| Sample identification |   2  |    1    |      |
+| Biological metadata   |   1  |    2    |   1  |
+| Technical metadata    |   1  |    1    |   1  |
+| Data availability     |   1  |         |   3  |
+| Reproducibility       |   1  |         |   3  |
+
+#### Key finding
+    While the metadata about the samples is somewhat complete and therefore usable (especially after reading the methods section in the article), actually redoing the computational analysis would be challenging - even more so as a person with little to nue clue about how such analyses are done. The article does provide info on which methods where applied (and references to specific articles about them), but no source code is available. Therefore, I could not simply rerun the analysis, but would have to really get into understandying the underlying analytical concepts and fetch code from elsehwere.
