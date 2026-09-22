@@ -62,8 +62,10 @@ Website 	Fast for 1 sequence 	        Not scalable 	            Low (no record o
 API 	    Moderate                        ~10s of sequences 	        Good (parameters in code) 	    Moderate
 Local HPC 	Slow to set up, fast to run 	Highly scalable 	        Excellent (script + Slurm log) 	Full
 
-
-## Interoperability assessment
+------------------------------------------------------------------
+## Part 2: Interoperability assessment
+Checklist for the paper:
+Sundell D. et al. (2017). AspWood: High-Spatial-Resolution Transcriptome Profiles Reveal Uncharacterized Modularity of Wood Formation in Populus tremula. The Plant Cell 29(7): 1585–1604. DOI: 10.1105/tpc.17.00153
 
 [PASS, PARTIAL, FAIL were assesed looking at the metadata on ENA alone. In the written answer, the article was also taken into considertion in some cases]
 
@@ -154,8 +156,8 @@ Local HPC 	Slow to set up, fast to run 	Highly scalable 	        Excellent (scri
 #### Key finding
    While the metadata about the samples is somewhat complete and therefore usable (especially after reading the methods section in the article), actually redoing the computational analysis would be challenging - even more so as a person with little to nue clue about how such analyses are done. The article does provide info on which methods where applied (and references to specific articles about them), but no source code is available. Therefore, I could not simply rerun the analysis, but would have to really get into understandying the underlying analytical concepts and fetch code from elsehwere.
 
-##Part three: Paper Reproducibillity Exercise
-
+----------------------------------------------------
+## Part 3: Paper Reproducibillity Exercise
 My chosen paper is the microbial environmental one: 
 Azarbad H. et al. (2022). Relative and Quantitative Rhizosphere Microbiome Profiling Results in Distinct Abundance Patterns. Frontiers in Microbiology 12: 798023. DOI: 10.3389/fmicb.2021.798023
 
