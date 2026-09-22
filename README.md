@@ -153,3 +153,51 @@ Local HPC 	Slow to set up, fast to run 	Highly scalable 	        Excellent (scri
 
 #### Key finding
    While the metadata about the samples is somewhat complete and therefore usable (especially after reading the methods section in the article), actually redoing the computational analysis would be challenging - even more so as a person with little to nue clue about how such analyses are done. The article does provide info on which methods where applied (and references to specific articles about them), but no source code is available. Therefore, I could not simply rerun the analysis, but would have to really get into understandying the underlying analytical concepts and fetch code from elsehwere.
+
+##Part three: Paper Reproducibillity Exercise
+
+My chosen paper is the microbial environmental one: 
+Azarbad H. et al. (2022). Relative and Quantitative Rhizosphere Microbiome Profiling Results in Distinct Abundance Patterns. Frontiers in Microbiology 12: 798023. DOI: 10.3389/fmicb.2021.798023
+
+
+**Analysis pipeline**
+The following methods are described in supplementary file 'Data Sheet 1.doxc'. 
+For the quality trimming (first 5 lines), informations about the pipeline used where fetched from the article referenced in the supplementary file: 
+Tremblay J, Singh K, Fern A, Kirton ES, He S, Woyke T, Lee J, Chen F, Dangl JL, Tringe SG. Primer and platform effects on 16S rRNA tag sequencing. Front Microbiol 2015;6:771.
+
+The remaining steps seem to differ from this reference and are described in detail in the supplementary file. 
+
+|Step    |   Tool    |   Version?    |   Parameters reported?  |    found where? |
+|--------|-----------|---------------|-------------------------|-----------------|
+|quality trimming | JGI Itag analysis pipeline - includes tools described below | - | none reported | supplementary file|
+|paired end read assembly | FLASH software | article | no | reference in supplemenraty file |
+|removing common sequence contaminants and PhiX spike-in reads | kmer matching tool DUK | - | no|  reference in supplemenraty file|
+|trimming assembled amplicons to remove reverse primer sequences | in-house PERL scripts | - | no | reference in supplementary file |
+|filtering amplicon sequences | ? | - | yes, values for lenient and stringent quality control parameters | reference in supplementary file|
+|--------|-----------|---------------|-------------------------|------------------------|
+|dereplication & clustering | DNAclust | v3 | dereplicated at 100% identity, clustered at 99% | supplementary file|
+|chimera scanning | UCHIME | article | de novo mode, reference mode | supplementary file, but reference is missing in references |
+|clustering | DNAclust | v3 | 97% identity | supplementary file|
+|taxonomy assignment 16S (bacteria) | RDP classifier | article | modified Greengenes training set built from a concatenation of the Greengenes db v13_5, and Silva eukaryotes 18S r128 | supplementary file, details in references |
+|taxonomy assignment ITS (fungi) | RDP classifier | article | training set generated from the Unite database | supplementary file, details in references |
+
+
+
+**Code availability**
+[FAIL] Is analysis code available at all?
+    No, the analysis code used in the article is not directly available. However, the computational tools are listed in detail, either in the supplemetary file or in the references of the supplementary file (one of which is missing).
+
+**Reference genome**
+[] Is the reference genome specified? 
+[] Is a version (assembly accession) given? 
+[] Is the annotation version (GTF/GFF) specified? 
+[] Could you identify exactly the same reference genome and annotation to reproduce the alignment?
+
+**Reproducibility verdict**
+
+
+
+
+
+
+
